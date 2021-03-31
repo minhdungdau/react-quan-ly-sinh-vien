@@ -1,44 +1,60 @@
 import { useState } from "react";
-export default function ModalAdd({ setModalVisible, persons, setPersons, newID, setNewID }) {
+export default function Form({ setModalAdd, persons, setPersons, newID, setNewID, editMode, editId, setEditMode}) {
+  let data
+
+  if (editMode === true) {
+    data = persons.find((person) => person.id === editId)
+  } else data = {}
+
   const [newPerson, setNewPerson] = useState({});
 
   function changeName(e) {
     let input = e.target.value;
-    let clone = { ...newPerson };
-    clone.name = input;
-    setNewPerson(clone);
+    newPerson.name = input
+    setNewPerson({...newPerson});
   }
 
   function changeYear(e) {
     let input = e.target.value;
-    let clone = { ...newPerson };
-    clone.yearOfBirth = input;
-    setNewPerson(clone);
+    newPerson.yearOfBirth = input
+    setNewPerson({...newPerson});
   }
 
   function changeEmail(e) {
     let input = e.target.value;
-    let clone = { ...newPerson };
-    clone.email = input;
-    setNewPerson(clone);
+    newPerson.email = input
+    setNewPerson({...newPerson});
   }
 
   function changePhone(e) {
     let input = e.target.value;
-    let clone = { ...newPerson };
-    clone.phone = input;
-    setNewPerson(clone);
+    newPerson.phone = input
+    setNewPerson({...newPerson});
   }
 
   function addNew() {
-    let clone = { ...newPerson };
-    clone.id = newID;
-    setNewPerson(clone);
-    console.log(clone);
-    setPersons([clone, ...persons]);
-
+    setModalAdd(false);
+    newPerson.id = newID
+    setNewPerson({...newPerson});
+    setPersons([newPerson, ...persons]);
     setNewID(newID + 1);
   }
+
+  function edit() {
+    setModalAdd(false);
+    newPerson.id = newID
+    setNewPerson({...newPerson});
+    setPersons(persons.map((person)=>{
+      if (person.id === editId) {
+        person = newPerson
+      }
+      return person
+    }));
+    setNewID(newID + 1);
+    setEditMode(false);
+    console.log(newPerson);
+  }
+
 
   const Render = (
     <form method="get" className="form-add">
@@ -46,11 +62,11 @@ export default function ModalAdd({ setModalVisible, persons, setPersons, newID, 
         <label htmlFor="name">
           Họ tên <span className="require">*</span>
         </label>
-        <input type="text" id="name" required onChange={(e) => changeName(e)} />
+        <input type="text" id="name" value={newPerson.name} required onChange={(e) => changeName(e)} onClick={(e) => console.log(newPerson)} />
       </div>
       <div className="row">
         <label htmlFor="year">Năm sinh</label>
-        <input type="text" id="year" onChange={(e) => changeYear(e)} />
+        <input type="text" id="year" value={newPerson.yearOfBirth} onChange={(e) => changeYear(e)} />
       </div>
       <div className="row">
         <label htmlFor="email">
@@ -60,6 +76,7 @@ export default function ModalAdd({ setModalVisible, persons, setPersons, newID, 
           type="email"
           id="email"
           required
+          value={newPerson.email}
           onChange={(e) => changeEmail(e)}
         />
       </div>
@@ -71,6 +88,7 @@ export default function ModalAdd({ setModalVisible, persons, setPersons, newID, 
           type="text"
           id="phone"
           required
+          value={newPerson.phone}
           onChange={(e) => changePhone(e)}
         />
       </div>
@@ -78,17 +96,14 @@ export default function ModalAdd({ setModalVisible, persons, setPersons, newID, 
         <button
           className="btn back-btn"
           type="button"
-          onClick={() => setModalVisible(false)}
+          onClick={() => setModalAdd(false)}
         >
           <i className="fas fa-chevron-left" /> Quay lại
         </button>
         <button
           className="btn save-btn"
           type="button"
-          onClick={() => {
-            addNew();
-            setModalVisible(false);
-          }}
+          onClick={editMode ? edit : addNew}
         >
           <i className="fas fa-save" /> Lưu
         </button>
@@ -98,7 +113,7 @@ export default function ModalAdd({ setModalVisible, persons, setPersons, newID, 
 
   return (
     <div className="modal-container">
-      <h1>Thêm mới học viên</h1>
+      {editMode ? <h1>Sửa thông tin học viên</h1> : <h1>Thêm mới học viên</h1>}
       {Render}
     </div>
   );
