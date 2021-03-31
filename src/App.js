@@ -16,7 +16,7 @@ function App() {
 
   const [persons, setPersons] = useState(PERSONS);
   const [modalAdd, setModalAdd] = useState(false);
-
+  const [newPerson, setNewPerson] = useState({});
   const [newID, setNewID] = useState(PERSONS.length + 1);
   const [editId, setEditId] = useState('0');
   const [editMode, setEditMode] = useState(false);
@@ -44,7 +44,7 @@ function App() {
                 <th className="customize"></th>
               </tr>
             </thead>
-            <TableBody persons={persons} handleShowRemove={handleShowRemove} setRemoveId={setRemoveId} setEditId = {setEditId} setModalAdd ={setModalAdd} setEditMode={setEditMode} />
+            <TableBody persons={persons} handleShowRemove={handleShowRemove} setRemoveId={setRemoveId} setEditId = {setEditId} setModalAdd ={setModalAdd} setEditMode={setEditMode} setNewPerson={setNewPerson} />
           </table>
         </div>
       </div>
@@ -58,6 +58,8 @@ function App() {
           editMode = {editMode}
           editId = {editId}
           setEditMode = {setEditMode}
+          newPerson = {newPerson}
+          setNewPerson = {setNewPerson}
         />
       )}
       <Modal show={show} onHide={handleCloseRemove}>

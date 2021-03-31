@@ -1,11 +1,12 @@
 
-export default function Body({
+export default function TableBody({
   persons,
   handleShowRemove,
   setRemoveId,
   setModalAdd,
   setEditId,
-  setEditMode
+  setEditMode,
+  setNewPerson
 }) {
   //custom
 
@@ -21,7 +22,8 @@ export default function Body({
           onClick={() => {
             setModalAdd(true);
             setEditId(person.id);
-            setEditMode(true)
+            setEditMode(true);
+            setNewPerson(persons.find((ele) => ele.id === person.id))
           }}
         >
           <i className="fas fa-edit"></i>Chỉnh sửa

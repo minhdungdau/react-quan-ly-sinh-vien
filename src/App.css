@@ -139,7 +139,7 @@ td {
 }
 
 
-.row{
+.row-custom{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -169,22 +169,23 @@ input{
 .btn{
   padding: 10px;
   font-weight: 600;
-  color:white;
+  color:white !important;
   border-radius: 3px;
 }
 
 .back-btn{
-  background-color: #6B767D;
+  background-color: #6B767D!important;
+  margin-right: 20px;
 }
 
 .back-btn:hover{
-  background-color: #555e64;
+  background-color: #555e64!important;
 }
 
 .save-btn{
-  background-color: #00A751;
+  background-color: #00A751!important;
 }
 
 .save-btn:hover{
-  background-color: #01803e;
+  background-color: #01803e!important;
 }

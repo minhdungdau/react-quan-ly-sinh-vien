@@ -1,12 +1,5 @@
-import { useState } from "react";
-export default function Form({ setModalAdd, persons, setPersons, newID, setNewID, editMode, editId, setEditMode}) {
-  let data
 
-  if (editMode === true) {
-    data = persons.find((person) => person.id === editId)
-  } else data = {}
-
-  const [newPerson, setNewPerson] = useState({});
+export default function Form({ setModalAdd, persons, setPersons, newID, setNewID, editMode, editId, setEditMode, newPerson, setNewPerson}) {
 
   function changeName(e) {
     let input = e.target.value;
@@ -52,23 +45,28 @@ export default function Form({ setModalAdd, persons, setPersons, newID, setNewID
     }));
     setNewID(newID + 1);
     setEditMode(false);
-    console.log(newPerson);
+    setNewPerson({});
+  }
+
+  function back () {
+    setNewPerson({});
+    setModalAdd(false)
   }
 
 
   const Render = (
     <form method="get" className="form-add">
-      <div className="row">
+      <div className="row-custom">
         <label htmlFor="name">
           Họ tên <span className="require">*</span>
         </label>
-        <input type="text" id="name" value={newPerson.name} required onChange={(e) => changeName(e)} onClick={(e) => console.log(newPerson)} />
+        <input type="text" id="name" value={newPerson.name} required onChange={(e) => changeName(e)} />
       </div>
-      <div className="row">
+      <div className="row-custom">
         <label htmlFor="year">Năm sinh</label>
         <input type="text" id="year" value={newPerson.yearOfBirth} onChange={(e) => changeYear(e)} />
       </div>
-      <div className="row">
+      <div className="row-custom">
         <label htmlFor="email">
           Email <span className="require">*</span>
         </label>
@@ -80,7 +78,7 @@ export default function Form({ setModalAdd, persons, setPersons, newID, setNewID
           onChange={(e) => changeEmail(e)}
         />
       </div>
-      <div className="row">
+      <div className="row-custom">
         <label htmlFor="phone">
           Phone <span className="require">*</span>
         </label>
@@ -96,7 +94,7 @@ export default function Form({ setModalAdd, persons, setPersons, newID, setNewID
         <button
           className="btn back-btn"
           type="button"
-          onClick={() => setModalAdd(false)}
+          onClick={back}
         >
           <i className="fas fa-chevron-left" /> Quay lại
         </button>
